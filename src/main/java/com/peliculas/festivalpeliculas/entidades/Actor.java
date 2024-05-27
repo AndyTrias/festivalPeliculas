@@ -8,20 +8,12 @@ import java.util.List;
 @Entity
 @Table(name="actor")
 @NoArgsConstructor
-public class Actor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
-    private String nombre;
-
-    @Column
-    private String apellido;
-
-    @ManyToOne()
-    private Nacionalidad nacionalidad;
+public class Actor extends Persona{
 
     @ManyToMany(mappedBy = "actores")
     private List<Pelicula> peliculas;
+
+    @ElementCollection
+    @Column(name = "rol")
+    private List<String> rolesDestacados;
 }

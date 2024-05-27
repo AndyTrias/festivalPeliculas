@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PeliculaRepositorio extends JpaRepository<Pelicula, Long> {
     Pelicula findByNombre(String nombre);
-    Pelicula findByDuracionEnMinutos(Integer duracion);
 }

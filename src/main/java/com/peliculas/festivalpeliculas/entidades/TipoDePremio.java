@@ -1,21 +1,13 @@
 package com.peliculas.festivalpeliculas.entidades;
 
 import jakarta.persistence.*;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="tipo_de_premio")
-@NoArgsConstructor
-public class TipoDePremio {
+public class TipoDePremio extends Persistente {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    @Enumerated(EnumType.STRING)
+    private Tipo tipoDePremio;
 
     @Column
-    private String nombre;
-
-    @Column(length = 100)
-    private String descripcion;
+    private Float montoOtorgado;
 }

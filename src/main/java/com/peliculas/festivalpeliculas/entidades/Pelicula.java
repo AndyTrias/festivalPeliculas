@@ -1,5 +1,6 @@
 package com.peliculas.festivalpeliculas.entidades;
 
+import com.peliculas.festivalpeliculas.converters.CalculadorPuntajeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Pelicula {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo_de_pelicula")
+public class Pelicula extends Persistente{
     @Column
     private String nombre;
 
@@ -31,14 +29,18 @@ public class Pelicula {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Actor> actores;
 
-    @Transient
-    private Integer duracionEnMinutos;
-
     @ManyToOne()
     private Genero genero;
 
     @OneToMany()
     @JoinColumn(name="pelicula_ganadora_id")
     private List<Premio> premioGanados;
+
+    @Convert(converter = CalculadorPuntajeConverter.class)
+    private CalculadorDePuntaje calculador;
+
+    public float puntaje() {
+        return calculador.devolverPuntaje(this.getResenias());
+    }
 }
 

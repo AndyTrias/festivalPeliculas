@@ -1,11 +1,12 @@
 package com.peliculas.festivalpeliculas;
 
-import com.peliculas.festivalpeliculas.entidades.Director;
-import com.peliculas.festivalpeliculas.entidades.Pelicula;
+import com.peliculas.festivalpeliculas.entidades.*;
 import com.peliculas.festivalpeliculas.repositorios.PeliculaRepositorio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,14 +19,20 @@ class FestivalPeliculasApplicationTests {
     @Test
     void crearPelicula() {
 
+        Biografia biografia = new Biografia();
+        biografia.setResumen("este deberia ser el resumen");
+
         Director director = new Director();
         director.setNombre("Gore");
         director.setApellido("Verbinski");
+        director.setBiografia(biografia);
 
-        Pelicula pelicula = new Pelicula();
+        PeliculaLargometraje pelicula = new PeliculaLargometraje();
         pelicula.setNombre("Piratas del Caribe");
-        pelicula.setDuracionEnMinutos(200);
         pelicula.setDirector(director);
+        pelicula.setPresupuesto(BigDecimal.valueOf(12345L));
+        pelicula.setCalculador(new PuntajeMedio());
+
 
         peliculaRepositorio.save(pelicula);
 

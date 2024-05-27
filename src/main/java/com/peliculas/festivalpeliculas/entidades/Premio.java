@@ -8,11 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "premio")
 @NoArgsConstructor
-public class Premio {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Premio extends Persistente{
 
     @ManyToOne
     private Evento evento;
@@ -28,6 +24,9 @@ public class Premio {
     )
     private List<Pelicula> peliculasNominadas;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     private TipoDePremio tipoDePremio;
+
+    @Column
+    private Float monto_otorgado;
 }

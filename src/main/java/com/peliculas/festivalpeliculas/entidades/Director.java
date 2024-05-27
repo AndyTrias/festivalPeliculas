@@ -6,21 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "director")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Director {
+public class Director extends Persona{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
-    private String nombre;
+    @Embedded
+    private Biografia biografia;
 
     @Column
-    private String apellido;
+    private String sitioWeb;
 
-    @ManyToOne()
-    private Nacionalidad nacionalidad;
+    @Column
+    private String estiloCinematografica;
 }
