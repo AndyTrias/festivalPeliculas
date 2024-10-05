@@ -1,0 +1,139 @@
+@startuml peliculas
+
+class Evento{
+    - nombre: String
+    - edicion: Int
+    - urlImagen: String
+    - fecha: LocalDate
+    - direccion: Direccion
+    - patrocionadores: List<String>
+}
+
+class Direccion{
+    - calle: String
+    - numero: Int
+    - ciudad: String
+    - pais: String
+}
+
+enum TipoDePremio {
+    MEJOR_PELICULA,
+    MEJOR_GUION_ORIGINAL,
+    MEJOR_ACTOR,
+    MEJOR_DIRECTOR
+}
+
+class Premio{
+    - tipoDePremio: TipoDePremio
+    - evento: Evento
+    - cantidadDeVotos: int
+    - peliculasNominadas: List<Pelicula>
+}
+
+class Pelicula{
+    - nombre: String
+    - resenias: List<Resenia>
+    - premios: List<Premio>
+    - director: Director
+    - genero: Genero
+    - calculador: CalculadorDePuntaje
+
+    +calificacion() : float
+}
+
+interface CalculadorDePuntaje{
+    +devolverPuntaje(List<Resenia> resenias) : float
+}
+
+class PuntajePromedio implements CalculadorDePuntaje{
+    +devolverPuntaje(List<Resenia> resenias) : float
+}
+
+class PuntajeMedio implements CalculadorDePuntaje{
+    +devolverPuntaje(List<Resenia> resenias) : float
+}
+
+Pelicula --> CalculadorDePuntaje
+
+class Director extends Persona{
+    - biografia: Biografia
+    - sitioWeb: String
+    - estiloCinematrafico: String
+}
+
+class Genero{
+    - nombre: String
+}
+
+class Actor extends Persona{
+    - peliculas: List<Pelicula>
+    - rolesDestacados: List<String>
+}
+
+class Nacionalidad{
+    - nombre: String
+}
+
+class Resenia{
+    - comentario: String
+    - calificacion: float
+    - fecha: LocalDateTime
+    - pelicula: Pelicula
+}
+
+class Biografia{
+    - lugarNacimiento: String
+    - resumen: String
+}
+
+abstract class Persona{
+    - nombre: String
+    - apellido: String
+    - nacionalidad: Nacionalidad
+    - fechaNacimiento: LocalDate
+}
+
+class PeliculaCortometraje extends Pelicula{
+    - TipoProyecto: TipoProyecto
+    - duracionEnMinutos: int
+    - institucionAcademica: String
+}
+
+class PeliculaLargometraje extends Pelicula{
+    - presupuesto: BigDecimal
+    - taquillaGlobal: BigDecimal
+    - FechaEstrenoGlobal: LocalDate
+    - formatosDeProyeccion: List<FormatoProyeccion>
+}
+
+enum FormatoProyeccion {
+    DIGITAL,
+    35MM,
+    70MM,
+    IMAX,
+    3D
+}
+
+
+enum TipoProyecto {
+    PROFESIONAL,
+    ESTUDIANTIL,
+    INDEPENDIENTE
+}
+
+PeliculaCortometraje --> TipoProyecto
+PeliculaLargometraje --> "*" FormatoProyeccion
+Premio -> "*" Pelicula
+Director <-- Pelicula
+Persona -> Nacionalidad
+Actor "*" <-- Pelicula
+Actor --> "*" Pelicula
+Genero <-- Pelicula
+Director --> Biografia 
+Pelicula <- Resenia
+Pelicula -> "*" Resenia
+Premio "*" <- Pelicula 
+Premio --> Evento
+Premio --> TipoDePremio
+Evento --> Direccion
+@enduml
