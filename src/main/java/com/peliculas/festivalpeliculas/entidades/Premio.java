@@ -1,6 +1,7 @@
 package com.peliculas.festivalpeliculas.entidades;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -8,13 +9,14 @@ import java.util.List;
 @Entity
 @Table(name = "premio")
 @NoArgsConstructor
+@Data
 public class Premio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Evento evento;
 
     @Column
@@ -28,6 +30,6 @@ public class Premio {
     )
     private List<Pelicula> peliculasNominadas;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private TipoDePremio tipoDePremio;
 }

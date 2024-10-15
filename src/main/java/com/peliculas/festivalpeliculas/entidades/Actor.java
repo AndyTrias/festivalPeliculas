@@ -1,13 +1,17 @@
 package com.peliculas.festivalpeliculas.entidades;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name="actor")
 @NoArgsConstructor
+@Getter
+@Setter
 public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +23,7 @@ public class Actor {
     @Column
     private String apellido;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Nacionalidad nacionalidad;
 
     @ManyToMany(mappedBy = "actores")
