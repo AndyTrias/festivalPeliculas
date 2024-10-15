@@ -22,7 +22,7 @@ public class Pelicula {
     private String nombre;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "director_id", nullable = false)
+    @JoinColumn(name = "director_id")
     private Director director;
 
     @OneToMany(mappedBy = "pelicula", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REMOVE})
